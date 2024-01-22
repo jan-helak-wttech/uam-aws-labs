@@ -1,23 +1,5 @@
 # AWS Elastic Kubernetes Service
 
-# Table of contents
-
-- [AWS Elastic Kubernetes Service](#aws-elastic-kubernetes-service)
-- [Table of contents](#table-of-contents)
-  - [TLDR](#tldr)
-  - [Introduction](#introduction)
-  - [Use Cases for kubernetes:](#use-cases-for-kubernetes)
-  - [Cluster Architecture](#cluster-architecture)
-  - [Kubernetes objects](#kubernetes-objects)
-  - [kubectl - Kubernetes CLI](#kubectl---kubernetes-cli)
-  - [Working with kubernetes](#working-with-kubernetes)
-  - [local development](#local-development)
-  - [AWS Elastic Kubernetes Service](#aws-elastic-kubernetes-service-1)
-  - [Bonus lectures](#bonus-lectures)
-  - [Labs](#labs)
-  - [Tasks](#tasks)
-
-
 ## TLDR
 ![Kubernetes logo](https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Kubernetes_logo_without_workmark.svg/200px-Kubernetes_logo_without_workmark.svg.png)
 
@@ -80,7 +62,7 @@
 - *stateful set* - logical set of pods with defined number of replicas. Stateful sets are used for running stateful applications;
 - *labels* - key-value pairs for identifying Kubernetes objects;
 
-## kubectl - Kubernetes CLI
+## Kubernetes CLI - *kubectl* 
 - kubectl is a command line tool for managing Kubernetes clusters;
 - cheatsheet: https://kubernetes.io/docs/reference/kubectl/cheatsheet/;
 
@@ -88,7 +70,7 @@
 - cluster configuration can be stored in a collection of YAML files;
 - updates of cluster configuration can be applied by kubectl and proper YAML file;
 
-## local development
+## Local development
 - *minikube* - local Kubernetes cluster for development and testing;
 - landing page: https://minikube.sigs.k8s.io/;
 
@@ -100,8 +82,7 @@
 - worker nodes are managed by AWS or by user; Types of worker nodes:
   - *EC2* - worker nodes are EC2 instances;
   - *Fargate* - worker nodes are serverless containers;
-- starting with EKS: https://docs.aws.amazon.com/eks/latest/userguide/getting-started-console.html#eks-configure-kubectl
-- *eksctl* - command line tool for creating and managing EKS clusters;
+- `eksctl` - command line tool for creating and managing EKS clusters. We can use `aws` cli as well;
   
 ## Bonus lectures
 - SRE - Site Reliability Engineering - [read online](https://sre.google/sre-book/table-of-contents/)
@@ -110,6 +91,8 @@
 
 
 ## Labs
+
+0. Create EKS cluster using AWS console. 
 1. Connect to created EKS cluster using `aws eks` command.
 
 2. Check if kubectl is working:
@@ -219,6 +202,28 @@ kubectl rollout history deployment my-nginx --revision=1
 kubectl rollout undo deployment my-nginx --to-revision=1
 ```
 
+25. Install metrics server:
+```
+ kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+```
+
+26. Set autoscaling for deployment:
+```
+kubectl autoscale deployment my-nginx --min=2 --max=5 --cpu-percent=30
+```
+
+27.  Check autoscaling:
+```
+kubectl get hpa
+```
+28.  Perform load test using Vegeta - [link](https://github.com/tsenart/vegeta#install)
+```
+echo "GET http://<service-ip>" | vegeta attack -duration=120s -rate=500 | vegeta report
+```
+29.  Check results:
+```
+kubectl get hpa --watch
+```
 
 ## Tasks
 1. Check AWS SLA agreement for EKS service:
@@ -227,12 +232,17 @@ kubectl rollout undo deployment my-nginx --to-revision=1
    - https://aws.amazon.com/eks/pricing/
 3. Check AWS Fargate pricing:
     - https://aws.amazon.com/fargate/pricing/
-4. Use aws cli to create EKS cluster in AWS:
+4. Use `aws` cli to create EKS cluster in AWS:
    - cluster should be created in us-east-1 region;
-   - cluster should have 3 worker nodes (t3.small)
+   - cluster should have 2 worker nodes (t3.small)
+   - EBS size for worker nodes should be 20GB;
    - worker nodes should be managed by AWS (managed group);
    - worker nodes should not be accessible from the Internet;
+   - use LabRole IAM role
 5. Create definition of service in yaml file:
-   - with type of LoadBalancer;
-   - service should be available publicly;
+   - on dedicated namespace called `my-game`;
+   - with type of LoadBalancer and port 80, available publicly;
+   - using 2048 game image (`image: public.ecr.aws/l6m2t8p7/docker-2048:latest`)
+   - service should have 3 replicas;
+   - service should be able to scale up to 10 replicas, based on cpu usage larger than 5%  
   
