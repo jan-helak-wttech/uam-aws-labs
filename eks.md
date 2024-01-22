@@ -175,8 +175,8 @@ kubectl delete pod nginx
 
 18.  Deploy nginx service using yaml file:
 ```
-curl -LO https://raw.githubusercontent.com/kubernetes/website/master/content/en/examples/application/nginx-app.yaml
-kubectl apply -f nginx-app.yaml
+curl -LO https://raw.githubusercontent.com/jan-helak-wttech/uam-aws-labs/main/my-nginx.yaml
+kubectl apply -f my-nginx.yaml
 kubectl get pod -o wide
 ```
 
@@ -184,7 +184,7 @@ kubectl get pod -o wide
 20. Modify yaml file and increase nginx version by 1:
 21. Apply changes:
 ```
-kubectl apply -f nginx-app.yaml
+kubectl apply -f my-nginx.yaml
 ```
 22. Check logs:
 ```
