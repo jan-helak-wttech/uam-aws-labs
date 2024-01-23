@@ -77,7 +77,7 @@
 ## AWS Elastic Kubernetes Service
 - AWS EKS is a managed Kubernetes service provided by AWS;
 - landing page: https://aws.amazon.com/eks/;
-- it's a regional service
+- it's a regional service;
 - master nodes are managed by AWS;
 - worker nodes are managed by AWS or by user; Types of worker nodes:
   - *EC2* - worker nodes are EC2 instances;
@@ -224,6 +224,13 @@ echo "GET http://<service-ip>" | vegeta attack -duration=120s -rate=500 | vegeta
 ```
 kubectl get hpa --watch
 ```
+
+30. To remove all objects from namespace:
+```
+kubectl delete all --all -n <namespace-name>
+```
+
+31. Create fargate profile using AWS console. Deploy nginx service using some **yaml** file. Check the results.
 
 ## Tasks
 1. Check AWS SLA agreement for EKS service:
