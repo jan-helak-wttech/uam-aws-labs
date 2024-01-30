@@ -255,7 +255,7 @@ kubectl delete all --all -n <namespace-name>
   
 
 
-## EKS Notes:
+## EKS Notes
 
 ```bash
 # Determine default VPC in the region
@@ -290,7 +290,6 @@ watch aws eks describe-cluster --name uam-lab-eks --query cluster.status
 # Connect to eks cluser using `aws eks` command:
 aws eks --region us-east-1 update-kubeconfig --name uam-lab-eks
 
-
 # Create Node Group
 aws eks create-nodegroup --cluster-name uam-lab-eks \
  --nodegroup-name uam-lab-eks-nodegroup \
@@ -302,7 +301,6 @@ aws eks create-nodegroup --cluster-name uam-lab-eks \
 
  # monitor progress of node group creation
 watch aws eks describe-nodegroup --cluster-name uam-lab-eks --nodegroup-name uam-lab-eks-nodegroup --query nodegroup.status
-
 
 # Delete Node Group
 aws eks delete-nodegroup --cluster-name uam-lab-eks --nodegroup-name uam-lab-eks-nodegroup --region us-east-1

@@ -7,7 +7,7 @@ WAF is a service that lets you define a set of rules to filter traffic to your w
 OWASP is a non-profit organization that provides a list of the most critical security risks to web applications. The list is updated every 3 years. The latest version is from 2021. The current list is available at [https://owasp.org/Top10/](https://owasp.org/Top10/).
 
 ## Open Source WAF
-There are several open source WAFs available. One of he most popular is: [ModSecurity](https://modsecurity.org/) - it can be used as a standalone application or as a module for Apache, Nginx, and IIS.
+There are several open source WAFs available. One of he most popular is: [ModSecurity](https://coreruleset.org/) - it can be used as a standalone application or as a module for Apache, Nginx, and IIS.
 
 ## AWS WAF
 [AWS WAF](https://docs.aws.amazon.com/waf/) can protect following resources:
