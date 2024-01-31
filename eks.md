@@ -209,7 +209,7 @@ kubectl rollout undo deployment my-nginx --to-revision=1
 
 26. Set autoscaling for deployment:
 ```
-kubectl autoscale deployment my-nginx --min=2 --max=5 --cpu-percent=30
+kubectl autoscale deployment my-nginx --min=2 --max=5 --cpu-percent=3
 ```
 
 27.  Check autoscaling:
@@ -218,7 +218,7 @@ kubectl get hpa
 ```
 28.  Perform load test using Vegeta - [link](https://github.com/tsenart/vegeta#install)
 ```
-echo "GET http://<service-ip>" | vegeta attack -duration=120s -rate=500 | vegeta report
+echo "GET http://<service-ip>" | ./vegeta attack -duration=120s -rate=500 | ./vegeta report
 ```
 29.  Check results:
 ```
